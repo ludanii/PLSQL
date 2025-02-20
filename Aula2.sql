@@ -1,0 +1,53 @@
+SELECT * FROM pf1788.PAIS INNER JOIN PF1788.ESTADO B
+
+
+SELECT
+    a.nom_pais pais,
+    COUNT (nom_estado) "QTD ESTADO"
+FROM
+    pf1788.pais a 
+    left JOIN pf1788.estado b on ( a.cod_pais = b.cod_pais )
+    where a.nom_pais = 'Brazil'
+GROUP BY
+    A.NOM_PAIS
+    HAVING COUNT (NOM_ESTADO) >0
+ORDER BY 2;
+
+
+SELECT
+    a.nom_pais pais,
+    B.NOM_ESTADO ESTADO,
+    COUNT (NOM_CIDADE) "QTD CIDADE"
+FROM
+    pf1788.pais a
+    left JOIN pf1788.estado b on ( a.cod_pais = b.cod_pais )
+    INNER JOIN PF1788.CIDADE C ON (B.COD_ESTADO = C.COD_ESTADO)
+    where a.nom_pais = 'Brazil'
+GROUP BY
+    A.NOM_PAIS,
+    B.NOM_ESTADO
+    HAVING COUNT (NOM_ESTADO) >0
+ORDER BY 2;
+    
+    
+    
+    
+SET SERVEROUTPUT ON
+
+DECLARE
+SALARIO NUMBER := 1509;
+DOLARES NUMBER := 45;
+CARRO NUMBER := &VALOR; 
+
+BEGIN
+    DBMS_OUTPUT.PUT_LINE('O SALÁRIO COM ACRESCIMO DE 25% É: R$' || SALARIO * 1.25);
+    DBMS_OUTPUT.PUT_LINE('O VALOR EM REAIS É: R$' || TO_CHAR(DOLARES * 5.75, '9990.99'));
+    DBMS_OUTPUT.PUT_LINE('O VALOR DO CARRO A VISTA É: R$' || CARRO);
+    DBMS_OUTPUT.PUT_LINE('O VALOR DAS PARCELAS EM 10X É: R$' || CARRO * 1.03 / 10);
+    DBMS_OUTPUT.PUT_LINE('O VALOR DO CARRO A PARCELADO É: R$' || CARRO * 1.03);
+                             ----- 4 EXERCICO  ------
+    DBMS_OUTPUT.PUT_LINE('O VALOR DAS PARCELAS EM 06X É: R$' || TO_CHAR((CARRO - (CARRO * 0.20)) * 1.10 / 6, '9990.99' ));
+    DBMS_OUTPUT.PUT_LINE('O VALOR DAS PARCELAS EM 12X É: R$' ||  TO_CHAR((CARRO - (CARRO * 0.20)) * 1.15 / 12, '9990.99' ));
+    DBMS_OUTPUT.PUT_LINE('O VALOR DAS PARCELAS EM 18X É: R$' ||  TO_CHAR((CARRO - (CARRO * 0.20)) * 1.20 / 18, '9990.99' ));
+    
+END;
